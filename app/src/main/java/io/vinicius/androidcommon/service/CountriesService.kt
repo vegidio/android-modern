@@ -1,6 +1,7 @@
 package io.vinicius.androidcommon.service
 
 import io.vinicius.androidcommon.model.Country
+import kotlinx.coroutines.flow.Flow
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -11,10 +12,10 @@ interface CountriesService
     }
 
     @GET("all")
-    suspend fun getCountries(): List<Country>
+    fun getCountries(): Flow<List<Country>>
 
     @GET("alpha/{countryCode}")
     suspend fun getCountryByCode(
         @Path("countryCode") countryCode: String
-    ): Country
+    ): Flow<Country>
 }

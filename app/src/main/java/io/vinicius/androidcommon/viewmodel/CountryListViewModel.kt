@@ -2,10 +2,11 @@ package io.vinicius.androidcommon.viewmodel
 
 import androidx.lifecycle.ViewModel
 import io.vinicius.androidcommon.constant.NetworkState
+import io.vinicius.androidcommon.model.Country
 import io.vinicius.androidcommon.service.CountriesService
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -16,8 +17,9 @@ class CountryListViewModel : ViewModel(), KoinComponent
 
     val state = MutableStateFlow(NetworkState.IDLE)
 
-    fun getCountries() = flow {
-        val countries = service.getCountries()
-        emit(countries)
-    }.flowOn(Dispatchers.IO)
+    fun getCountries(): Flow<List<Country>>
+    {
+        return service.getCountries()
+            .flowOn(Dispatchers.IO)
+    }
 }

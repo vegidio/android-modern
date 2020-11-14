@@ -32,6 +32,7 @@ class RestFactory(private val context: Context, private val loggingInterceptor: 
 
         // Initialize Retrofit with the OkHttp client
         val retrofit = Retrofit.Builder().client(client.build())
+            .addCallAdapterFactory(FlowCallAdapterFactory())
             .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().build()))
             .baseUrl(baseUrl)
             .build()
