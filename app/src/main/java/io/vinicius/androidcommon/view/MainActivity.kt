@@ -1,4 +1,4 @@
-package io.vinicius.androidcommon
+package io.vinicius.androidcommon.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
