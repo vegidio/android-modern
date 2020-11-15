@@ -13,8 +13,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.onActive
-import androidx.compose.runtime.onDispose
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -36,7 +34,7 @@ fun HomeScreen()
         Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
             // Compose version of RecyclerView
             LazyColumnFor(items = menuOptions) { name ->
-                MenuOption(name = name)
+                MenuRow(name = name)
             }
         }
     }
@@ -44,7 +42,7 @@ fun HomeScreen()
 }
 
 @Composable
-private fun MenuOption(name: String)
+private fun MenuRow(name: String)
 {
     Row(
         horizontalArrangement = Arrangement.Center,

@@ -15,7 +15,7 @@ interface CountriesService
     fun getCountries(): Flow<List<Country>>
 
     @GET("alpha/{countryCode}")
-    suspend fun getCountryByCode(
+    fun getCountryByCode(
         @Path("countryCode") countryCode: String
     ): Flow<Country>
 }

@@ -31,36 +31,33 @@ private class FlowCallAdapter<R>(private val responseType: Type) : CallAdapter<R
     override fun responseType() = responseType
 
     @ExperimentalCoroutinesApi
-    override fun adapt(call: Call<R>): Flow<R?>
-    {
-        return callbackFlow {
-            val started = AtomicBoolean(false)
+    override fun adapt(call: Call<R>): Flow<R?> = callbackFlow {
+        val started = AtomicBoolean(false)
 
-            if (started.compareAndSet(false, true)) {
-                call.enqueue(object : Callback<R> {
-                    override fun onResponse(call: Call<R>, response: Response<R>) {
-                        if (response.isSuccessful) {
-                            val body = response.body()
+        if (started.compareAndSet(false, true)) {
+            call.enqueue(object : Callback<R> {
+                override fun onResponse(call: Call<R>, response: Response<R>) {
+                    if (response.isSuccessful) {
+                        val body = response.body()
 
-                            if (body == null || response.code() == 204) {
-                                close(Throwable("HTTP status code: ${response.code()}"))
-                            } else {
-                                offer(body)
-                                close()
-                            }
+                        if (body == null || response.code() == 204) {
+                            close(Throwable("HTTP status code: ${response.code()}"))
                         } else {
-                            close(Throwable(errorMsg(response) ?: "unknown error"))
+                            offer(body)
+                            close()
                         }
+                    } else {
+                        close(Throwable(errorMsg(response) ?: "unknown error"))
                     }
+                }
 
-                    override fun onFailure(call: Call<R>, throwable: Throwable) {
-                        close(throwable)
-                    }
-                })
-            }
-
-            awaitClose { call.cancel() }
+                override fun onFailure(call: Call<R>, throwable: Throwable) {
+                    close(throwable)
+                }
+            })
         }
+
+        awaitClose { call.cancel() }
     }
 
     fun errorMsg(response: Response<R>): String?
