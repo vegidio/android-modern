@@ -8,7 +8,7 @@ import retrofit2.http.Path
 interface CountriesService
 {
     companion object {
-        internal const val baseUrl = "https://restcountries.eu/rest/v2/"
+        internal const val BASE_URL = "https://restcountries.eu/rest/v2/"
     }
 
     @GET("all")

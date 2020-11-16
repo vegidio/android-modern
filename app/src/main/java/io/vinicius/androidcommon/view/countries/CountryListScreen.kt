@@ -15,19 +15,18 @@ import androidx.compose.runtime.onActive
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.viewModel
 import androidx.ui.tooling.preview.Preview
 import io.vinicius.androidcommon.component.LoadingErrorOverlay
-import io.vinicius.androidcommon.constant.NetworkState
 import io.vinicius.androidcommon.model.Country
 import io.vinicius.androidcommon.ui.AndroidCommonTheme
 import io.vinicius.androidcommon.viewmodel.CountryListViewModel
+import io.vinicius.sak.network.NetworkState
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun CountryListScreen()
 {
-    val viewModel: CountryListViewModel = viewModel()
-//    val scope = rememberCoroutineScope()
+    val viewModel: CountryListViewModel = getViewModel()
     val state = viewModel.state.collectAsState()
     val countries = viewModel.countries.collectAsState()
 

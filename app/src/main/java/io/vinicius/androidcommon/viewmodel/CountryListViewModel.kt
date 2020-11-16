@@ -2,9 +2,9 @@ package io.vinicius.androidcommon.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.vinicius.androidcommon.constant.NetworkState
 import io.vinicius.androidcommon.model.Country
 import io.vinicius.androidcommon.service.CountriesService
+import io.vinicius.sak.network.NetworkState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import timber.log.Timber
 
 class CountryListViewModel : ViewModel(), KoinComponent
 {

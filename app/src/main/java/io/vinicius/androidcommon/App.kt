@@ -2,6 +2,7 @@ package io.vinicius.androidcommon
 
 import android.app.Application
 import io.vinicius.androidcommon.di.serviceModule
+import io.vinicius.androidcommon.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -33,7 +34,7 @@ class App : Application()
         startKoin {
             androidContext(this@App)
             androidLogger()
-            modules(serviceModule)
+            modules(serviceModule, viewModelModule)
         }
     }
     // endregion
