@@ -12,7 +12,6 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.onActive
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -23,19 +22,19 @@ import io.vinicius.androidcommon.constant.NetworkState
 import io.vinicius.androidcommon.model.Country
 import io.vinicius.androidcommon.ui.AndroidCommonTheme
 import io.vinicius.androidcommon.viewmodel.CountryListViewModel
-import kotlinx.coroutines.launch
 
 @Composable
 fun CountryListScreen()
 {
     val viewModel: CountryListViewModel = viewModel()
-    val scope = rememberCoroutineScope()
+//    val scope = rememberCoroutineScope()
     val state = viewModel.state.collectAsState()
     val countries = viewModel.countries.collectAsState()
 
     // region - Lifecycle
     onActive {
-        scope.launch { viewModel.getCountries() }
+        // Fetching data
+        viewModel.getCountries()
     }
     // endregion
 
@@ -54,7 +53,7 @@ fun CountryListScreen()
         if (state.value != NetworkState.IDLE) {
             LoadingErrorOverlay(
                 isError = state.value == NetworkState.ERROR,
-                retry = { scope.launch { viewModel.getCountries() } }
+                retry = { viewModel.getCountries() }
             )
         }
     }
@@ -66,9 +65,7 @@ private fun CountryRow(country: Country)
 {
     Row(
         horizontalArrangement = Arrangement.Center,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(40.dp),
+        modifier = Modifier.fillMaxWidth().height(40.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(text = country.name)
